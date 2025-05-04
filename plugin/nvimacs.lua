@@ -1,11 +1,18 @@
+function keymap_set_to_cmd_and_i(lhs, rhs)
+  -- NOTE: need to do this because vim cmd mode doesn't update cursor sometimes
+  vim.keymap.set("!", lhs, function()
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(rhs, true, true, true), "n", true)
+  end, { silent = true })
+end
+
 --
 --- Navigation
 
 -- backward-char
-vim.keymap.set("!", "<C-b>", "<Left>", { silent = true })
+keymap_set_to_cmd_and_i("<C-b>", "<Left>")
 
 -- forward-char
-vim.keymap.set("!", "<C-f>", "<Right>", { silent = true })
+keymap_set_to_cmd_and_i("<C-f>", "<Right>")
 
 -- previous-line
 vim.keymap.set("i", "<C-p>", "<Up>", { silent = true })
@@ -14,10 +21,10 @@ vim.keymap.set("i", "<C-p>", "<Up>", { silent = true })
 vim.keymap.set("i", "<C-n>", "<Down>", { silent = true })
 
 -- move-beginning-of-line
-vim.keymap.set("!", "<C-a>", "<Home>", { silent = true })
+keymap_set_to_cmd_and_i("<C-a>", "<Home>", { silent = true })
 
 -- move-end-of-line
-vim.keymap.set("!", "<C-e>", "<End>", { silent = true })
+keymap_set_to_cmd_and_i("<C-e>", "<End>", { silent = true })
 
 -- backward-sentence
 vim.keymap.set("i", "<M-a>", "<C-o>(", { silent = true })
@@ -26,12 +33,10 @@ vim.keymap.set("i", "<M-a>", "<C-o>(", { silent = true })
 vim.keymap.set("i", "<M-e>", "<C-o>)", { silent = true })
 
 -- backward-word
-vim.keymap.set("i", "<M-b>", "<C-Left>", { silent = true })
-vim.keymap.set("c", "<M-b>", "<S-Left>", { silent = true })
+keymap_set_to_cmd_and_i("<M-b>", "<S-Left>", { silent = true })
 
 -- forward-word
-vim.keymap.set("i", "<M-f>", "<C-o>e<Right>", { silent = true })
-vim.keymap.set("c", "<M-f>", "<S-Right>", { silent = true })
+keymap_set_to_cmd_and_i("<M-f>", "<S-Right>", { silent = true })
 
 -- scroll-down-command
 vim.keymap.set("i", "<M-v>", "<PageUp>", { silent = true })
@@ -43,14 +48,13 @@ vim.keymap.set("i", "<C-v>", "<PageDown>", { silent = true })
 --- Copy & Paste
 
 -- delete-char
-vim.keymap.set("!", "<C-d>", "<Del>", { silent = true })
+keymap_set_to_cmd_and_i("<C-d>", "<Del>", { silent = true })
 
 --
 --- Editing
 
 -- kill-region
-vim.keymap.set("!", "<M-BS>", "<C-w>", { silent = true })
-vim.keymap.set("i", "<C-BS>", "<C-w>", { silent = true })
+keymap_set_to_cmd_and_i("<M-BS>", "<C-w>", { silent = true })
 
 -- kill-line
 vim.keymap.set("i", "<C-k>", function()
